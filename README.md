@@ -46,7 +46,7 @@ _-- Returns enough leagues to spend up to the budget, sponsoring as many leagues
 | -------------:|:--------:|:-------:| --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 |     `total_budget` | required | number  | The total amount to invest in sponsorship.                                                         |
 |     `search_radius` | required | number  | The total distance in miles form the central location with which to query leagues.     
-|     `central_location` | required | list  | The geographical position that the query will be initialized at, denoted as latitude and longitude in the form of `[lat, lon]`    |
+|     `central_location` | required | list  | The geographical position that the query will be initialized at, denoted as latitude and longitude in the form of `[lat, lon]`    |<br>
 
 #### Example Response
 ```{
@@ -74,6 +74,7 @@ _-- Returns enough leagues to spend up to the budget, sponsoring as many leagues
 
 ## POST
 _-- Adds a new league to the database._ 
+
 <br>
 
 `/leagues`
