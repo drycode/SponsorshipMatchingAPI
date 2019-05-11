@@ -1,14 +1,15 @@
+"""Contains setup and configuration data for MongoDB instance."""
 from pymongo import MongoClient
 
 from mongo.config_variables import MONGO_CONFIG
 
 
-"""Contains setup and configuration data for MongoDB instance."""
-
-client = MongoClient(
-    f"mongodb://{MONGO_CONFIG['username']}:{MONGO_CONFIG['password']}@ds155086.mlab.com:55086/leagueside-interview"
+CLIENT = MongoClient(
+    "mongodb://{0}:{1}@ds155086.mlab.com:55086/leagueside-interview".format(
+        MONGO_CONFIG["username"], MONGO_CONFIG["password"]
+    )
 )
 
-db = client["leagueside-interview"]
+DB = CLIENT["leagueside-interview"]
 
-leagues_collection = db["test-collection"]
+LEAGUES_COLLECTION = DB["test-collection"]

@@ -1,4 +1,5 @@
 
 *__pycache__
 *.vscode
-*config_variables
+*config_variables.__pycache__
+*.pytest_cache

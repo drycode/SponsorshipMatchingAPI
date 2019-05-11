@@ -56,6 +56,26 @@ leagues = [
 ]
 
 
+What I did
+    Started by sketching out Top Down tasks
+        Considered what to use for technology
+        Settled on Mongo because as of now, the API doesn't require a relational database
+        Found a good PyPi library made by Google for calculating positions from given Lat/Lon
+    Put together some sample data
+    Worked out the Algorithm for selecting leagues to sponsor
+    Created a class to help create data conformity
+    Hooked up Mongo
+        Separated out interface make switching databases easier in the future
+    Began building flask application    
+        Check server / database health
+        REST suggests that actions should not exist in the URI, and that multiple Request
+          types can be made from the same URI. The two required endpoints for the API share 
+          a URI, but are called by different HTTP requests (POST, GET)
+    Unit Testing 
+        During testing, I realized I needed to extract instances of the Mongo database from interface
+          methods.
+    Linting / Refactoring        
+          
 
 
 
