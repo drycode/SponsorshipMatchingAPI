@@ -4,7 +4,7 @@ from collections import namedtuple
 
 Coordinates = namedtuple("Coordinates", "latitude longitude")
 
-# TODO: Add coordinate validation -90/90 - -180/180
+
 class League:
     """An instance of a league contains a name, price required for sponsorship, and a geographic
     position denoted by a Latitude/Longitude pair"""
@@ -23,8 +23,8 @@ class League:
 
 
 def _verify_coordinates(coords):
-    if not (90 >= coords[0] >= -90):
+    if not 90 >= int(coords[0]) >= -90:
         raise ValueError
-    if not (180 >= coords[1] >= -180):
+    if not 180 >= int(coords[1]) >= -180:
         raise ValueError
-
+    return coords

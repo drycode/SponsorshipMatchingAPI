@@ -40,7 +40,7 @@ def test_empty_league():
 @mark.parametrize("input", {(-90, 0), (90, 91), (23, 180), (-1, -180)})
 def test__verify_coords(input):
     """Checks verify coordinates function"""
-    assert _verify_coordinates(input) == None
+    assert _verify_coordinates(input) == input
 
 
 @mark.parametrize("input", {(-2344, 90), (91, 91), (-1, 181), (-1, -190)})
@@ -48,4 +48,3 @@ def test__fail_verify_coords(input):
     """Checks verify coordinates function"""
     with raises(ValueError):
         _verify_coordinates(input)
-

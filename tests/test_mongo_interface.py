@@ -47,11 +47,9 @@ def test_get_leagues(total_budget, search_radius, central_location, expected):
     assert (len(selected_leagues), remaining_budget) == expected
 
 
-@mark.parametrize(
-    "total_budget, search_radius, central_location, expected",
-    {(None, None, None, None)},
-)
-def test_fail_get_leagues(total_budget, search_radius, central_location, expected):
+@mark.parametrize("total_budget, search_radius, central_location", {(None, None, None)})
+def test_fail_get_leagues(total_budget, search_radius, central_location):
+    """Tests that TypeError is raised when get_leagues is passed None Values"""
     with raises(TypeError):
         get_leagues(total_budget, search_radius, central_location, MOCK_COLLECTION)
 
@@ -69,4 +67,5 @@ def test_add_league_to_db():
 
 
 def test_verify_active_db():
-    assert verify_active_db(MOCK_COLLECTION, MOCK_DB) == True
+    """Tests the method call to check if database is active"""
+    assert verify_active_db(MOCK_COLLECTION, MOCK_DB)

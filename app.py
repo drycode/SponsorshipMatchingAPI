@@ -6,7 +6,12 @@ The endpoints share the `/leagues` route.
 
 from flask import Flask, jsonify, request
 from mongo.mongo_interface import add_league_to_db, get_leagues, verify_active_db
-
+from data_models.league import _verify_coordinates
+from error_handling.messages import (
+    GET_VALUE_ERROR,
+    GET_ATTRIBUTE_ERROR,
+    POST_VALUE_ERROR,
+)
 
 APP = Flask(__name__)
 
@@ -29,52 +34,83 @@ def check_database():
 def create_new_league():
     """Creates a new league in the database. Takes parameters `league_name`,
     `price`, and `coordinates`"""
-    if not request.json:
-        msg = {"msg": "Request body must include league_name, price, and coordinates"}
-        return jsonify(msg), 400
 
     try:
-        new_league = add_league_to_db(
-            request.json["league_name"],
-            request.json["price"],
-            request.json["coordinates"],
-        )
-        print(new_league)
+        league_name, price, coordinates = _create_leagues_helper(request)
+
+        if not league_name or not price or not coordinates:
+            raise ValueError
+
+        new_league = add_league_to_db(league_name, price, coordinates)
+
         return jsonify(repr(new_league)), 201
 
-    except Exception as err:
-        print(f"Invalid input returned from client: {request.json}")
-        return err, 400
+    except ValueError:
+        return jsonify(POST_VALUE_ERROR), 400
 
 
 @APP.route("/leagues", methods=["GET"])
 def get_select_leagues():
     """Returns a list of leagues selected for sponsorship within a given budget, and
     within a specified radius of a location."""
-    if not request.json:
-        msg = {
-            "msg": "Request body must include total_budget, search_radius, and central_location"
-        }
-        return jsonify(msg), 400
 
     try:
+        total_budget, search_radius, central_location = _get_leagues_helper(request)
+
         selected_leagues, remaining_budget = get_leagues(
-            request.json["total_budget"],
-            request.json["search_radius"],
-            request.json["central_location"],
+            total_budget, search_radius, central_location
         )
-        print(selected_leagues, remaining_budget)
-        # order response by name, price, coordinates
+
         msg = {
             "leagues_to_sponsor": selected_leagues,
             "remaining_budget": remaining_budget,
         }
+
         return jsonify(msg), 200
 
-    except Exception as err:
-        print(f"Invalid input returned from client: {request.json}")
-        return err, 404
+    except AttributeError:
+        return jsonify(GET_ATTRIBUTE_ERROR), 400
+
+    except ValueError:
+        return jsonify(GET_VALUE_ERROR), 400
+
+
+def _create_leagues_helper(req):
+    if req.json:
+        league_name = req.json["league_name"]
+        price = req.json["price"]
+        coordinates = _verify_coordinates(req.json["coordinates"])
+
+    else:
+        league_name = req.args.get("league_name", type=str)
+        price = req.args.get("price", type=int)
+        coordinates = [
+            int(x)
+            for x in _verify_coordinates(
+                req.args.get("coordinates", type=str).strip("[]").split(",")
+            )
+        ]
+
+    return league_name, price, coordinates
+
+
+def _get_leagues_helper(req):
+    if req.json:
+        total_budget = req.json["total_budget"]
+        search_radius = req.json["search_radius"]
+        central_location = req.json["central_location"]
+
+    else:
+        total_budget = req.args.get("total_budget", type=int)
+        search_radius = req.args.get("search_radius", type=int)
+        central_location = [
+            int(x)
+            for x in req.args.get("central_location", type=str).strip("[]").split(",")
+        ]
+
+    return total_budget, search_radius, central_location
 
 
 if __name__ == "__main__":
+    APP.config["DEBUG"] = True
     APP.run()
