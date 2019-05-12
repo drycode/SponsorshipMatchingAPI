@@ -81,6 +81,11 @@ _-- This creates a new league and stores it in the database._
 }
 ```
 
+##### SAMPLE OUTPUT
+```
+"The Red Sox -- Price: 2400, Coordinates(latitude=40.03423242143, longitude=-75.13485)"
+```
+
 <hr>
 
 #### GET Get Leagues to Sponsor
@@ -97,6 +102,46 @@ _-- This returns enough leagues to spend up to the budget, sponsoring as many le
     "total_budget": 7500, 
     "search_radius": 7, 
     "central_location": [40.0274622857143, -75.0562142]
+}
+```
+##### SAMPLE OUTPUT
+```
+{
+    "leagues_to_sponsor": [
+        {
+            "coordinates": [
+                40.0276523242143,
+                -75.0132142
+            ],
+            "name": "The Fighting Irish",
+            "price": 1300
+        },
+        {
+            "coordinates": [
+                40.0274622852143,
+                -75.0564142
+            ],
+            "name": "The Zoomers",
+            "price": 1500
+        },
+        {
+            "coordinates": [
+                40.0274622852143,
+                -75.0564142
+            ],
+            "name": "Team 8",
+            "price": 1620
+        },
+        {
+            "coordinates": [
+                40.0274622851143,
+                -75.0552142
+            ],
+            "name": "Team 7",
+            "price": 2130
+        }
+    ],
+    "remaining_budget": 950
 }
 ```
 
