@@ -20,3 +20,11 @@ class League:
 
     def __repr__(self):
         return f"{self.name} -- Price: {self.price}, {self.coordinates}"
+
+
+def _verify_coordinates(coords):
+    if not (90 >= coords[0] >= -90):
+        raise ValueError
+    if not (180 >= coords[1] >= -180):
+        raise ValueError
+

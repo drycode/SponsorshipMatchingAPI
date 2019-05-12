@@ -6,10 +6,6 @@ from mongo.mongo_config import DB, LEAGUES_COLLECTION as L_COL
 from data_models.league import League, Coordinates
 
 
-# TODO: consider putting League class in its own file, accessible by other interfaces
-# TODO: consider doing some sort of Coordinate validation
-
-
 def get_leagues(total_budget, search_radius, central_location, collection=L_COL):
     """Returns a list of leagues to sponsor within a given budget and location"""
     # Local leagues is a list of leagues within a given search radius

@@ -9,46 +9,12 @@ from mongo.mongo_interface import (
     verify_active_db,
     _compile_local_leagues,
 )
-from data_models.league import League
+
 from sample_data import SAMPLE_LEAGUES, CENTRAL_LOCATION
 
 MOCK_DB = mongomock.MongoClient().db
 MOCK_COLLECTION = MOCK_DB.collection
 MOCK_COLLECTION.insert_many(SAMPLE_LEAGUES)
-
-
-def test_asdict():
-    """Tests dictionary representation of League instances"""
-    league = League("The Mighty Ducks", 4300, [23.082395, -78.221348])
-    assert league.asdict() == {
-        "name": "The Mighty Ducks",
-        "price": 4300,
-        "coordinates": (23.082395, -78.221348),
-    }
-
-
-@mark.parametrize(
-    "user_input, expected",
-    {
-        (
-            League("The Mighty Ducks", 4300, [23.082395, -78.221348]),
-            "The Mighty Ducks -- Price: 4300, Coordinates(latitude=23.082395, longitude=-78.221348)",
-        ),
-        (
-            League("The Bruins", 3450, [84.2340958, -23.0923485]),
-            "The Bruins -- Price: 3450, Coordinates(latitude=84.2340958, longitude=-23.0923485)",
-        ),
-    },
-)
-def test__repr__(user_input, expected):
-    """Checks __repr__ special method of League instance"""
-    assert repr(user_input) == expected
-
-
-def test_empty_league():
-    """Checks against None/empty parameters for League instance"""
-    with raises(TypeError):
-        League(None, None, [])
 
 
 @mark.parametrize(
