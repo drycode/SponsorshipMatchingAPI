@@ -1,7 +1,5 @@
 """Sample data for tests"""
-from collections import namedtuple
-
-Coordinates = namedtuple("Coordinates", "latitude longitude")
+from data_models.league import Coordinates
 
 CENTRAL_LOCATION = Coordinates(40.0274622857143, -75.0562142)
 T1 = Coordinates(40.0274622857143, -77.0562142)
@@ -14,6 +12,7 @@ T7 = Coordinates(40.0274622851143, -75.0552142)
 T8 = Coordinates(40.0274622852143, -75.0564142)
 T9 = Coordinates(40.0274622852143, -75.2461421)
 T10 = Coordinates(40.0276623852143, -75.0264142)
+T11 = Coordinates(40, -73)
 
 SAMPLE_LEAGUES = [
     {"name": "The Wyld Stallions", "price": 4500, "coordinates": T1},
@@ -26,4 +25,5 @@ SAMPLE_LEAGUES = [
     {"name": "Team 8", "price": 1620, "coordinates": T8},
     {"name": "Team 9", "price": 2700, "coordinates": T9},
     {"name": "Team 10", "price": 2140, "coordinates": T10},
+    {"name": "Team 11", "price": 3000, "coordinates": T11},
 ]

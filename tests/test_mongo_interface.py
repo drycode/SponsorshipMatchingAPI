@@ -7,11 +7,9 @@ from mongo.mongo_interface import (
     add_league_to_db,
     get_leagues,
     verify_active_db,
-    League,
     _compile_local_leagues,
 )
-
-
+from data_models.league import League
 from sample_data import SAMPLE_LEAGUES, CENTRAL_LOCATION
 
 MOCK_DB = mongomock.MongoClient().db
@@ -67,7 +65,12 @@ def test__compile_local_leagues(search_radius, central_location, expected):
 
 @mark.parametrize(
     "total_budget, search_radius, central_location, expected",
-    {(1000, 5, CENTRAL_LOCATION, (0, 1000)), (7800, 5, CENTRAL_LOCATION, (4, 410))},
+    {
+        (1000, 5, CENTRAL_LOCATION, (0, 1000)),
+        (7800, 5, CENTRAL_LOCATION, (4, 410)),
+        (3000, 5, (-41, 85), (0, 3000)),
+        (7500, 16, (40, -73), (1, 4500)),
+    },
 )
 def test_get_leagues(total_budget, search_radius, central_location, expected):
     """Tests collection of leagues within certain radius, and remaining budget after selected
@@ -76,6 +79,15 @@ def test_get_leagues(total_budget, search_radius, central_location, expected):
         total_budget, search_radius, central_location, MOCK_COLLECTION
     )
     assert (len(selected_leagues), remaining_budget) == expected
+
+
+@mark.parametrize(
+    "total_budget, search_radius, central_location, expected",
+    {(None, None, None, None)},
+)
+def test_fail_get_leagues(total_budget, search_radius, central_location, expected):
+    with raises(TypeError):
+        get_leagues(total_budget, search_radius, central_location, MOCK_COLLECTION)
 
 
 def test_add_league_to_db():

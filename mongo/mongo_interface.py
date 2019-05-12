@@ -1,30 +1,13 @@
 """This file provides methods used by to access the MongoDB database by the Flask
 Application. """
 
-from collections import namedtuple
 from geopy.distance import geodesic
 from mongo.mongo_config import DB, LEAGUES_COLLECTION as L_COL
+from data_models.league import League, Coordinates
 
-
-Coordinates = namedtuple("Coordinates", "latitude longitude")
 
 # TODO: consider putting League class in its own file, accessible by other interfaces
 # TODO: consider doing some sort of Coordinate validation
-class League:
-    """An instance of a league contains a name, price required for sponsorship, and a geographic
-    position denoted by a Latitude/Longitude pair"""
-
-    def __init__(self, league_name, price, coords):
-        self.name = league_name
-        self.price = price
-        self.coordinates = Coordinates(*coords)
-
-    def asdict(self):
-        """Returns instance of the object as a Python dictionary"""
-        return {"name": self.name, "price": self.price, "coordinates": self.coordinates}
-
-    def __repr__(self):
-        return f"{self.name} -- Price: {self.price}, {self.coordinates}"
 
 
 def get_leagues(total_budget, search_radius, central_location, collection=L_COL):
@@ -36,11 +19,12 @@ def get_leagues(total_budget, search_radius, central_location, collection=L_COL)
     # Selected leagues are leagues that were selected for sponsorship given the
     # selection parameters (total budget, location, etc.)
     selected_leagues = []
-    for league in local_leagues:
+    remaining_budget = total_budget
 
-        remaining_budget = total_budget
+    for league in local_leagues:
         total_budget -= league["price"]
         if total_budget >= 0:
+            remaining_budget = total_budget
             selected_leagues.append(
                 {
                     "name": league["name"],
