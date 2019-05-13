@@ -2,6 +2,7 @@
 from data_models.league import Coordinates
 
 CENTRAL_LOCATION = Coordinates(40.0274622857143, -75.0562142)
+
 T1 = Coordinates(40.0274622857143, -77.0562142)
 T2 = Coordinates(40.0274622851143, -75.0552142)
 T3 = Coordinates(40.0274622852143, -75.0564142)

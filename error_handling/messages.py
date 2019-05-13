@@ -30,3 +30,18 @@ POST_VALUE_ERROR = {
     },
     "error": "ValueError: Make sure to use appropriate types in your request",
 }
+
+PYMONGO_OPERATION_ERROR = {
+    "msg": "Coordinates must be valid in form lon/lat",
+    "required_parameters": {
+        "league_name": "Type(str)",
+        "price": "Type(int)",
+        "coordinates": {
+            "type": "[longitude, latitude]",
+            "longitude": "-180 to 180",
+            "latitude": "-90 to 90",
+        },
+    },
+    "error": "OperationError: Make sure coordinate values are valid values",
+}
+

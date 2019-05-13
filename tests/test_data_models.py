@@ -18,11 +18,11 @@ def test_asdict():
     {
         (
             League("The Mighty Ducks", 4300, [23.082395, -78.221348]),
-            "The Mighty Ducks -- Price: 4300, Coordinates(latitude=23.082395, longitude=-78.221348)",
+            "The Mighty Ducks -- Price: 4300, Coordinates(longitude=23.082395, latitude=-78.221348)",
         ),
         (
             League("The Bruins", 3450, [84.2340958, -23.0923485]),
-            "The Bruins -- Price: 3450, Coordinates(latitude=84.2340958, longitude=-23.0923485)",
+            "The Bruins -- Price: 3450, Coordinates(longitude=84.2340958, latitude=-23.0923485)",
         ),
     },
 )
@@ -37,7 +37,7 @@ def test_empty_league():
         League(None, None, [])
 
 
-@mark.parametrize("input", {(-90, 0), (90, 91), (23, 180), (-1, -180)})
+@mark.parametrize("input", {(0, -90), (91, 90), (180, 23), (-180, -1)})
 def test__verify_coords(input):
     """Checks verify coordinates function"""
     assert _verify_coordinates(input) == input

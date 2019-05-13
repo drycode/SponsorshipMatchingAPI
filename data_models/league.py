@@ -2,7 +2,7 @@
 
 from collections import namedtuple
 
-Coordinates = namedtuple("Coordinates", "latitude longitude")
+Coordinates = namedtuple("Coordinates", "longitude latitude")
 
 
 class League:
@@ -23,8 +23,10 @@ class League:
 
 
 def _verify_coordinates(coords):
-    if not 90 >= int(coords[0]) >= -90:
+    lon, lat = coords[0], coords[1]
+
+    if not 90 >= int(lat) >= -90:
         raise ValueError
-    if not 180 >= int(coords[1]) >= -180:
+    if not 180 >= int(lon) >= -180:
         raise ValueError
     return coords

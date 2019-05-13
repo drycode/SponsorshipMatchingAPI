@@ -5,12 +5,16 @@ The endpoints share the `/leagues` route.
 """
 
 from flask import Flask, jsonify, request
+from pymongo.errors import OperationFailure
+
 from mongo.mongo_interface import add_league_to_db, get_leagues, verify_active_db
+
 from data_models.league import _verify_coordinates
 from error_handling.messages import (
     GET_VALUE_ERROR,
     GET_ATTRIBUTE_ERROR,
     POST_VALUE_ERROR,
+    PYMONGO_OPERATION_ERROR,
 )
 
 APP = Flask(__name__)
@@ -73,6 +77,9 @@ def get_select_leagues():
 
     except ValueError:
         return jsonify(GET_VALUE_ERROR), 400
+
+    except OperationFailure:
+        return jsonify(PYMONGO_OPERATION_ERROR), 400
 
 
 def _create_leagues_helper(req):
