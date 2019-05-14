@@ -24,7 +24,19 @@ This endpoint should accept a few arguments:
 
 ## Running development server
 
-Make sure to initialize a new MongoDB instance for testing. Instructions for how to do so can be found in the [MongoDB docs](https://docs.mongodb.com/v3.2/tutorial/install-mongodb-on-os-x/).
+Make sure to initialize a new MongoDB instance for testing. 
+Start by creating a directory for your MongoDB data.
+
+Eg: `/data/db`
+
+#### Mac OSX install
+```sh
+brew tap mongodb/brew
+brew services start mongodb
+mongod --port 27017 --dbpath <path_to_directory>
+```
+
+Instructions for how to install on other machines can be found in the [MongoDB docs](https://docs.mongodb.com/v3.2/tutorial/install-mongodb-on-os-x/).
 
 ```sh
 $ pip install -r requirements.txt

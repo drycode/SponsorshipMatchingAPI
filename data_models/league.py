@@ -23,6 +23,9 @@ class League:
 
 
 def _verify_coordinates(coords):
+    if not isinstance(coords, list) or len(coords) != 2:
+        raise ValueError("Improper coordinate formatting")
+
     lon, lat = coords[0], coords[1]
 
     if not 90 >= int(lat) >= -90:

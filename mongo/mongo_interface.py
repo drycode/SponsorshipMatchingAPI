@@ -1,6 +1,7 @@
 """This file provides methods used by to access the MongoDB database by the Flask
 Application. """
 
+from pymongo.errors import OperationFailure
 from mongo.mongo_config import DB, LEAGUES_COLLECTION as L_COL
 
 from data_models.league import League
@@ -53,7 +54,10 @@ def add_league_to_db(league_name, price, coordinates, collection=L_COL):
 
 def verify_active_db(collection=L_COL, database=DB):
     """Checks the existence/accessibility of the MongoDB instance"""
-    return collection.name in database.list_collection_names()
+    try:
+        return collection.name in database.list_collection_names()
+    except OperationFailure:
+        return False
 
 
 def _compile_local_leagues(search_radius, central_location, collection):

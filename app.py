@@ -5,7 +5,7 @@ The endpoints share the `/leagues` route.
 """
 
 from flask import Flask, jsonify, request
-from pymongo.errors import OperationFailure
+from pymongo.errors import OperationFailure, ConnectionFailure
 
 from mongo.mongo_interface import add_league_to_db, get_leagues, verify_active_db
 
@@ -29,7 +29,7 @@ def check_server():
 @APP.route("/database_health")
 def check_database():
     """Checks if the database is active."""
-    if not verify_active_db:
+    if not verify_active_db():
         return jsonify({"message": "The database has not been reached"})
     return jsonify({"message": "The database is active"})
 
@@ -41,9 +41,6 @@ def create_new_league():
 
     try:
         league_name, price, coordinates = _create_leagues_helper(request)
-
-        if not league_name or not price or not coordinates:
-            raise ValueError
 
         new_league = add_league_to_db(league_name, price, coordinates)
 
@@ -94,9 +91,12 @@ def _create_leagues_helper(req):
         coordinates = [
             int(x)
             for x in _verify_coordinates(
-                req.args.get("coordinates", type=str).strip("[]").split(",")
+                req.args.get("coordinates", default="", type=str).strip("[]").split(",")
             )
         ]
+
+    if not league_name or not price or not coordinates:
+        raise ValueError
 
     return league_name, price, coordinates
 
@@ -119,5 +119,14 @@ def _get_leagues_helper(req):
 
 
 if __name__ == "__main__":
-    APP.config["DEBUG"] = True
-    APP.run()
+    if verify_active_db():
+        APP.config["DEBUG"] = True
+        APP.run()
+    else:
+        print()
+        print("Could not connect to the MongoDB instance.")
+        print(
+            "Please check that Mongo is running \n and confirm your environment variables"
+        )
+        print()
+        raise ConnectionFailure
