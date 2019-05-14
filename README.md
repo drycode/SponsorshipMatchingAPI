@@ -23,9 +23,12 @@ This endpoint should accept a few arguments:
 
 
 ## Running development server
+
+Make sure to initialize a new MongoDB instance for testing. Instructions for how to do so can be found in the [MongoDB docs](https://docs.mongodb.com/v3.2/tutorial/install-mongodb-on-os-x/).
+
 ```sh
 $ pip install -r requirements.txt
-$ export MONGO_HOST=<host> MONGO_USERNAME=<username> MONGO_PASSWORD=<password>
+$ export MONGO_HOST=<host>
 $ python app.py
  * Serving Flask app "app" (lazy loading)
  * Environment: production
