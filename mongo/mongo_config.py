@@ -5,7 +5,6 @@ from pymongo.errors import OperationFailure
 import os
 from mongo.initial_data import MONGO_DOCS
 
-
 CLIENT = MongoClient(host=os.environ.get("MONGO_HOST"))
 
 DB = CLIENT["leagueside-interview"]

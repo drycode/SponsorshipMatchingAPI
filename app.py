@@ -6,7 +6,7 @@ The endpoints share the `/leagues` route.
 
 from flask import Flask, jsonify, request
 from pymongo.errors import OperationFailure, ConnectionFailure
-
+from flask_cors import CORS
 from mongo.mongo_interface import add_league_to_db, get_leagues, verify_active_db
 
 from data_models.league import _verify_coordinates
@@ -18,6 +18,7 @@ from error_handling.messages import (
 )
 
 APP = Flask(__name__)
+CORS(APP)
 
 
 @APP.route("/health")
@@ -87,9 +88,9 @@ def _create_leagues_helper(req):
 
     else:
         league_name = req.args.get("league_name", type=str)
-        price = req.args.get("price", type=int)
+        price = req.args.get("price", type=float)
         coordinates = [
-            int(x)
+            float(x)
             for x in _verify_coordinates(
                 req.args.get("coordinates", default="", type=str).strip("[]").split(",")
             )
@@ -111,7 +112,7 @@ def _get_leagues_helper(req):
         total_budget = req.args.get("total_budget", type=int)
         search_radius = req.args.get("search_radius", type=int)
         central_location = [
-            int(x)
+            float(x)
             for x in req.args.get("central_location", type=str).strip("[]").split(",")
         ]
 
