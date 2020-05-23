@@ -1,6 +1,7 @@
-"""LeagueSide interview API with endpoints for:
-    Creating New Leagues in the database.
-    Selecting the maximum number of leagues to sponsor within a budget.
+"""
+Proof of concept API with endpoints for:
+    - POST Creating New Leagues in the database.
+    - GET Selecting the maximum number of leagues to sponsor within a budget.
 The endpoints share the `/leagues` route.
 """
 

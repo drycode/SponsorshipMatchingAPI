@@ -1,4 +1,4 @@
-"""Tests of the MongoDB interface for the LeagueSide sponsorship API"""
+"""Tests of the MongoDB interface for the SponsorshipMatching API"""
 
 from pytest import mark, raises
 import mongomock

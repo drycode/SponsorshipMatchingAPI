@@ -1,14 +1,17 @@
-# LeagueSide Sponsorship API
+# Sponsorship API
+> DEPRECATED: The previously active mongo instance supporting data to this API has been shut down. If you would like to run this project, you will need to provide a viable datastore. 
 
 ![coverage][coverage]
 [![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg)](https://www.python.org/)
 
-> My solution to the LeagueSide Interview Project.
+> A proof of concept sponsorship matching API which takes a community sports league and matches is with a potential sponsor. 
 
-## Project Requirements
+
+
+## Project Features
 
 #### ADD A LEAGUE TO THE SYSTEM
-For the purposes of this exercise, a League is a collection of, at the very least:
+In this example API, a League refers to a collection of, at the very least:
 
 1. A league name.
 2. A latitude/longitude pair.
@@ -55,7 +58,6 @@ $ python app.py
 $ pytest
 ================================ test session starts ================================
 platform darwin -- Python 3.7.2, pytest-4.4.2, py-1.8.0, pluggy-0.11.0
-rootdir: /Users/DanYoung/Documents/workspace/interview-challenges/LeagueSide
 plugins: cov-2.7.1
 collected 22 items                                                                                                                                              
 

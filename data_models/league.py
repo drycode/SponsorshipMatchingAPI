@@ -1,4 +1,4 @@
-"""Module used to store data models for the LeagueSide API"""
+"""Module used to store data models for the SponsorhipMatching API"""
 
 from collections import namedtuple
 
