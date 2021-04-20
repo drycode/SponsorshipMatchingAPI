@@ -31,7 +31,7 @@ more-itertools==7.0.0
 packaging==19.0
 pdoc==0.3.2
 pluggy==0.11.0
-py==1.8.0
+py==1.10.0
 Pygments==2.4.0
 pylint==2.3.1
 pymongo==3.8.0
